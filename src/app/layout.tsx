@@ -6,14 +6,28 @@ import FloatingWidgets from "@/components/FloatingWidgets";
 
 export const metadata: Metadata = {
   title: {
-    default: "Robotonic Innovations SDDP Pvt Ltd | STEM & Robotics Education",
+    default: "Robotonic Innovations SDDP LLP | Next-Gen STEM & Robotics Education",
     template: "%s | Robotonic Innovations"
   },
-  description: "Robotonic Innovations SDDP Pvt Ltd is an elite educational technology company bringing hands-on STEM, IoT, 3D Printing, and Robotics education directly to Indian students and schools.",
-  keywords: ["STEM education India", "Robotics for kids", "Atal Tinkering Lab Setup", "Arduino workshops", "3D Printing in schools", "Robotonic Innovations", "Robotonic Innovations SDDP Pvt Ltd", "EdTech India"],
+  description: "Robotonic Innovations SDDP LLP is India's leading EdTech company transforming education. We provide hands-on STEM, Robotics, IoT, 3D Printing, and AI training for students and partner schools.",
+  keywords: [
+    "Robotonic Innovations SDDP LLP", 
+    "Robotonic Innovations", 
+    "STEM education India", 
+    "Robotics for kids", 
+    "IoT training for students", 
+    "Atal Tinkering Lab Setup", 
+    "ATL Lab Setup India", 
+    "Arduino workshops", 
+    "3D Printing in schools", 
+    "EdTech India", 
+    "Practical Learning", 
+    "Next-Gen Education", 
+    "STEM Models"
+  ],
   openGraph: {
-    title: "Robotonic Innovations SDDP Pvt Ltd",
-    description: "Innovating the future of Indian education with hands-on STEM, Robotics, and IoT training.",
+    title: "Robotonic Innovations SDDP LLP | Premium STEM Education",
+    description: "Transforming the future of Indian education with hands-on practical learning in STEM, Robotics, AI, and IoT training.",
     url: "https://robotonicinnovations.com",
     siteName: "Robotonic Innovations",
     images: [
