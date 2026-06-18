@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Add new feedback to the beginning of the array
         array_unshift($data, $newFeedback);
         
-        // Keep only the latest 50 feedbacks to avoid file growing too large
-        $data = array_slice($data, 0, 50);
+        // Keep only the latest 5000 feedbacks to avoid file growing infinitely large, but effectively keeping them "forever"
+        $data = array_slice($data, 0, 5000);
         
         // Save back to file
         file_put_contents($file, json_encode($data));
