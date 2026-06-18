@@ -82,9 +82,11 @@ export default function Home() {
                 Empowering Indian students through hands-on DIY Robotics, AI, and Tech Projects.
               </motion.p>
               <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 pt-4">
-                <AnimeMagneticButton className="bg-[#FF7A00] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#FFB547] hover:shadow-xl hover:shadow-[#FF7A00]/30 transition-all duration-300 flex items-center justify-center gap-2">
-                  Explore Programs <ArrowRight className="h-5 w-5" />
-                </AnimeMagneticButton>
+                <Link href="/programs" className="w-full sm:w-auto">
+                  <AnimeMagneticButton className="w-full sm:w-auto bg-[#FF7A00] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#FFB547] hover:shadow-xl hover:shadow-[#FF7A00]/30 transition-all duration-300 flex items-center justify-center gap-2">
+                    Explore Programs <ArrowRight className="h-5 w-5" />
+                  </AnimeMagneticButton>
+                </Link>
                 <Link href="/gallery" className="w-full sm:w-auto">
                 <AnimeMagneticButton className="w-full sm:w-auto bg-white text-[#1E293B] px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-orange-500/10 hover:shadow-orange-500/20 transition-all flex items-center justify-center gap-2 border border-gray-100">
                   <Play className="h-5 w-5 text-[#FF7A00] fill-[#FF7A00]" /> Watch Demo
