@@ -37,6 +37,31 @@ export default function Home() {
   ]);
 
   useEffect(() => {
+    // Migrate old local storage feedbacks to the new server
+    const saved = localStorage.getItem("robotonic_feedback");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          parsed.forEach(async (fb) => {
+            await fetch('/api/feedback.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: fb.author || fb.name || "Anonymous",
+                email: fb.email || "migrated@example.com",
+                feedback: fb.text || fb.feedback,
+                role: fb.role || "Enthusiast"
+              })
+            });
+          });
+          // Clear after migrating to prevent duplicates
+          localStorage.removeItem("robotonic_feedback");
+        }
+      } catch (e) {}
+    }
+
+    // Fetch feedbacks from server
     fetch('/api/feedback.php')
       .then(res => res.json())
       .then(data => {
