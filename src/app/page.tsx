@@ -426,7 +426,7 @@ export default function Home() {
                 </div>
               )}
               
-              {testimonials.length > 6 && (
+              {testimonials.length > 3 && (
                 <div className="flex justify-center mt-8">
                   <Link href="/feedbacks" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E293B] text-white font-semibold hover:bg-[#FF7A00] transition-colors">
                     View All Feedbacks <ArrowRight className="w-5 h-5" />
