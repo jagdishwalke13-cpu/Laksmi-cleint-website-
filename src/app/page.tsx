@@ -38,7 +38,7 @@ export default function Home() {
     <div className="bg-[#FFF8F1] overflow-hidden">
       
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center pt-8 md:pt-28 pb-12 md:pb-20 z-10">
+      <section className="relative lg:min-h-screen flex lg:items-center pt-8 lg:pt-16 pb-12 md:pb-20 z-10">
         <div className="absolute top-0 left-0 w-full h-[800px] bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#FFB547]/30 via-transparent to-transparent -z-10 pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
