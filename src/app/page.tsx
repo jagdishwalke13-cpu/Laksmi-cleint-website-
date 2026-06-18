@@ -5,13 +5,14 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, Play, Cpu, Brain, Printer, Plane, Zap, Building, 
   CheckCircle2, Users, BookOpen, Layers, Plus, Minus, Mail, Phone, MapPin,
-  MessageSquare, Quote
+  MessageSquare, Quote, PenLine
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   TextRotator, FloatingImage, StaggeredHeading, AnimeMagneticButton, AnimeAnimatedCard 
 } from "@/components/AnimeComponents";
 import StemSolutions from "@/components/StemSolutions";
+import FeedbackModal from "@/components/FeedbackModal";
 
 // Fade in up animation variant
 const fadeInUp: any = {
@@ -29,6 +30,34 @@ const staggerContainer: any = {
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [testimonials, setTestimonials] = useState([
+    { text: "My child became more curious and confident after the STEM program. Building and taking home the model made learning real and exciting.", author: "Mrs. Ananya Rao", role: "Parent" },
+    { text: "A well-structured STEM solution... thoughtfully aligned with the school syllabus, ensuring hands-on activities reinforce classroom concepts.", author: "Dr. Rekha Reddy", role: "Principal" }
+  ]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("robotonic_feedback");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setTestimonials((prev) => [...prev, ...parsed]);
+      } catch (e) {}
+    }
+  }, []);
+
+  const handleFeedbackSubmit = (feedback: { name: string; email: string; text: string; role: string }) => {
+    const newTestimonial = {
+      text: feedback.text,
+      author: feedback.name,
+      role: feedback.role,
+    };
+    setTestimonials((prev) => [...prev, newTestimonial]);
+    
+    const saved = localStorage.getItem("robotonic_feedback");
+    const parsed = saved ? JSON.parse(saved) : [];
+    localStorage.setItem("robotonic_feedback", JSON.stringify([...parsed, newTestimonial]));
+  };
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -100,7 +129,7 @@ export default function Home() {
                 { label: "Partner Schools", value: "50+" },
                 { label: "Students Guided", value: "10,000+" },
                 { label: "Practical Learning", value: "100%" },
-                { label: "STEM Modules", value: "20+" }
+                { label: "STEM Models", value: "100+" }
               ].map((stat, i) => (
                 <div key={i} className="flex flex-col items-center justify-center">
                   <h3 className="text-4xl sm:text-5xl font-extrabold text-[#FF7A00] mb-2">{stat.value}</h3>
@@ -320,19 +349,27 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <StaggeredHeading text="What People Say" className="text-4xl font-extrabold text-[#1E293B]" />
+            <div className="mt-8 flex justify-center">
+              <div onClick={() => setIsFeedbackOpen(true)}>
+                <AnimeMagneticButton className="px-8 py-4 bg-[#FF7A00] text-white rounded-full font-bold shadow-lg hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer">
+                  <PenLine className="w-5 h-5" /> Write Feedback
+                </AnimeMagneticButton>
+              </div>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              { text: "My child became more curious and confident after the STEM program. Building and taking home the model made learning real and exciting.", author: "Mrs. Ananya Rao", role: "Parent" },
-              { text: "A well-structured STEM solution... thoughtfully aligned with the school syllabus, ensuring hands-on activities reinforce classroom concepts.", author: "Dr. Rekha Reddy", role: "Principal" }
-            ].map((t, i) => (
-              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.2 }}>
-                <AnimeAnimatedCard className="bg-white p-10 lg:p-12 rounded-3xl shadow-xl shadow-orange-500/5 relative border border-gray-100 h-full">
-                  <Quote className="absolute top-8 right-8 h-20 w-20 text-[#FFF8F1] z-0" />
-                  <p className="text-xl text-gray-700 leading-relaxed relative z-10 font-medium italic mb-8">"{t.text}"</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.2 }}>
+                <AnimeAnimatedCard className="bg-white p-8 lg:p-10 rounded-3xl shadow-xl shadow-orange-500/5 relative border border-gray-100 h-full flex flex-col justify-between">
+                  <div>
+                    <Quote className="absolute top-6 right-6 h-16 w-16 text-[#FFF8F1] z-0" />
+                    <p className="text-lg text-gray-700 leading-relaxed relative z-10 font-medium italic mb-8">"{t.text}"</p>
+                  </div>
                   <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#FF7A00] flex items-center justify-center text-white font-bold text-xl">{t.author.charAt(5)}</div>
+                    <div className="w-12 h-12 rounded-full bg-[#FF7A00] flex shrink-0 items-center justify-center text-white font-bold text-xl">
+                      {t.author.charAt(0).toUpperCase() || (t.author.includes('.') ? t.author.split('.')[1]?.trim().charAt(0) : 'U')}
+                    </div>
                     <div>
                       <h4 className="font-bold text-[#1E293B]">{t.author}</h4>
                       <p className="text-[#FF7A00] font-semibold text-sm">{t.role}</p>
@@ -344,6 +381,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <FeedbackModal 
+        isOpen={isFeedbackOpen} 
+        onClose={() => setIsFeedbackOpen(false)} 
+        onSubmit={handleFeedbackSubmit} 
+      />
 
       {/* 11. LATEST NEWS */}
       <section className="py-24 bg-white rounded-[3rem]">
