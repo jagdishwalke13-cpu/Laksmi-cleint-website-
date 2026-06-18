@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laxmi Client Demo</title>
+    
+    <!-- Fonts: Orbitron & DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Animations: Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+
+    <style>
+        /* Global CSS Variables */
+        :root {
+            --primary: #FF7A00;
+            --secondary: #FFB547;
+            --accent: #FDBA74;
+            --bg: #FFF8F1;
+            --dark: #1E293B;
+            --text: #1E293B;
+        }
+
+        /* Basic Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Smooth background transition if we want to change it later */
+            transition: background-color 0.5s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--dark);
+        }
+
+        /* Navigation */
+        nav {
+            height: 68px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 248, 241, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 122, 0, 0.15);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgba(245, 238, 231, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .wa-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateY(0);
+        }
+
+        .mobile-menu .nav-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .mobile-menu .nav-link::after {
+            background-color: white;
+        }
+
+        .mobile-menu .nav-link:hover, .mobile-menu .nav-link.active {
+            color: var(--dark);
+        }
+
+        @media (max-width: 900px) {
+            .nav-center, .nav-right .wa-btn {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* SPA Pages container */
+        #app-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Individual Pages/Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 120px 5% 60px; /* Account for fixed nav */
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Reusable UI Components */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 122, 0, 0.2);
+            font-size: 1.05rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(255, 122, 0, 0.3);
+        }
+
+        /* Hero Section Styling */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            height: calc(100vh - 120px);
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        /* Utility classes for animations */
+        .antigravity-element {
+            display: inline-block;
+        }
+
+        .stagger-item {
+            opacity: 0;
+        }
+
+        /* Generic Section content */
+        .section-header {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 4px;
+            bottom: -10px;
+            left: 0;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-left">
+            <a class="logo" data-target="home">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7.8v8.4L12 22l10-5.8V7.8L12 2zM12 4.3l8 4.6v7.2l-8 4.6-8-4.6V8.9l8-4.6z"/>
+                </svg>
+                ROBOTONIC
+            </a>
+        </div>
+        <div class="nav-center">
+            <a class="nav-link active" data-target="home">Home</a>
+            <a class="nav-link" data-target="solutions">Solutions</a>
+            <a class="nav-link" data-target="technology">Technology</a>
+            <a class="nav-link" data-target="about">About Us</a>
+            <a class="nav-link" data-target="contact">Contact</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://wa.me/+919731554348" target="_blank" class="wa-btn">
+                <i class="fa-brands fa-whatsapp"></i> Chat Now
+            </a>
+            <button class="hamburger" id="hamburger-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a class="nav-link active" data-target="home">Home</a>
+        <a class="nav-link" data-target="solutions">Solutions</a>
+        <a class="nav-link" data-target="technology">Technology</a>
+        <a class="nav-link" data-target="about">About Us</a>
+        <a class="nav-link" data-target="contact">Contact</a>
+        <a href="https://wa.me/+919731554348" target="_blank" class="wa-btn" style="margin-top: 2rem;">
+            <i class="fa-brands fa-whatsapp"></i> Chat Now
+        </a>
+    </div>
+
+    <!-- SPA Application Container -->
+    <div id="app-container">
+        
+        <!-- Home Page -->
+        <section id="home" class="page active" style="opacity: 1; display: block; position: relative;">
+            <div class="hero">
+                <h1 class="antigravity-element stagger-home">Next-Gen<br>Web Solutions</h1>
+                <p class="stagger-home">Experience seamless transitions and powerful performance built with pure Vanilla JavaScript and dynamic styling.</p>
+                <div class="stagger-home">
+                    <button class="btn" onclick="navigateTo('solutions')">
+                        Explore Solutions <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Page -->
+        <section id="solutions" class="page">
+            <h2 class="section-header stagger-solutions">Solutions</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="stagger-solutions" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 4px solid var(--primary);">
+                    <i class="fa-solid fa-industry" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Automation</h3>
+                    <p>Streamline your workflow with our advanced automation solutions.</p>
+                </div>
+                <div class="stagger-solutions" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 4px solid var(--secondary);">
+                    <i class="fa-solid fa-robot" style="font-size: 2rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Robotics</h3>
+                    <p>Next-generation robotics integration for modern businesses.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Page -->
+        <section id="technology" class="page">
+            <h2 class="section-header stagger-technology">Technology</h2>
+            <p class="stagger-technology" style="margin-top: 2rem; max-width: 800px; font-size: 1.1rem;">
+                We leverage cutting-edge technologies to build scalable and robust systems. 
+                Our tech stack includes state-of-the-art AI, machine learning models, and efficient single-page applications.
+            </p>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page">
+            <h2 class="section-header stagger-about">About Us</h2>
+            <p class="stagger-about" style="margin-top: 2rem; max-width: 800px; font-size: 1.1rem;">
+                ROBOTONIC is a forward-thinking agency focused on pushing the boundaries of technology. 
+                We craft experiences that are both visually stunning and technically superior.
+            </p>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page">
+            <h2 class="section-header stagger-contact">Get In Touch</h2>
+            <div class="stagger-contact" style="margin-top: 3rem; background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); max-width: 600px;">
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;">Ready to start your next project? Let's talk.</p>
+                <form onsubmit="event.preventDefault(); alert('Form submitted!');">
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" placeholder="Your Name" style="width: 100%; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'DM Sans'; font-size: 1rem; outline: none; transition: border-color 0.3s;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="email" placeholder="Your Email" style="width: 100%; padding: 1rem; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'DM Sans'; font-size: 1rem; outline: none; transition: border-color 0.3s;">
+                    </div>
+                    <button class="btn" style="width: 100%; justify-content: center;">Send Message <i class="fa-regular fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // SPA Routing Logic
+        let isAnimating = false;
+
+        function navigateTo(targetId) {
+            if (isAnimating) return; // Prevent clicking while animating
+            
+            const currentActive = document.querySelector('.page.active');
+            const newActive = document.getElementById(targetId);
+
+            if (currentActive === newActive) return;
+
+            isAnimating = true;
+
+            // Update Navigation active states
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.target === targetId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Make sure new active is positioned properly
+            newActive.style.display = 'block';
+            newActive.style.opacity = '0';
+            newActive.style.position = 'absolute';
+            currentActive.style.position = 'absolute';
+
+            // Animate OUT current page
+            anime({
+                targets: currentActive,
+                opacity: 0,
+                translateY: -30,
+                duration: 400,
+                easing: 'easeInOutQuad',
+                complete: () => {
+                    currentActive.classList.remove('active');
+                    currentActive.style.display = 'none';
+                    currentActive.style.transform = 'translateY(0)'; // Reset for next time
+                }
+            });
+
+            // Animate IN new page
+            newActive.classList.add('active');
+            anime({
+                targets: newActive,
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 500,
+                delay: 200, // Wait a bit for the other to fade out
+                easing: 'easeOutQuad',
+                complete: () => {
+                    newActive.style.position = 'relative'; // Reset position
+                    isAnimating = false;
+                    
+                    // Trigger stagger animations for the new page
+                    animatePageContent(targetId);
+                }
+            });
+        }
+
+        function animatePageContent(pageId) {
+            // Reset opacity first
+            const elements = document.querySelectorAll(`.stagger-${pageId}`);
+            elements.forEach(el => el.style.opacity = '0');
+
+            anime({
+                targets: `.stagger-${pageId}`,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                delay: anime.stagger(150),
+                duration: 600,
+                easing: 'easeOutCubic'
+            });
+        }
+
+        // Event Listeners for Nav
+        document.querySelectorAll('.nav-link, .logo').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.target;
+                if(target) {
+                    navigateTo(target);
+                    // Close mobile menu if open
+                    document.getElementById('mobile-menu').classList.remove('open');
+                    document.getElementById('hamburger-btn').innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            });
+        });
+
+        // Hamburger Menu Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            if (mobileMenu.classList.contains('open')) {
+                hamburgerBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else {
+                hamburgerBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            }
+        });
+
+        // Scroll Behavior
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize animations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial stagger animation for home page
+            animatePageContent('home');
+
+            // Floating antigravity animation for hero title
+            anime({
+                targets: '.antigravity-element',
+                translateY: [-12, 12],
+                direction: 'alternate',
+                loop: true,
+                easing: 'easeInOutSine',
+                duration: 2500
+            });
+        });
+
+    </script>
+</body>
+</html>
