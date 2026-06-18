@@ -6,13 +6,13 @@ import FloatingWidgets from "@/components/FloatingWidgets";
 
 export const metadata: Metadata = {
   title: {
-    default: "Robotonic Innovations SDDP LLP | Next-Gen STEM & Robotics Education",
-    template: "%s | Robotonic Innovations"
+    default: "SDDP ROBOTONIC INNOVATIONS LLP | Next-Gen STEM & Robotics Education",
+    template: "%s | SDDP ROBOTONIC INNOVATIONS LLP"
   },
-  description: "Robotonic Innovations SDDP LLP is India's leading EdTech company transforming education. We provide hands-on STEM, Robotics, IoT, 3D Printing, and AI training for students and partner schools.",
+  description: "SDDP ROBOTONIC INNOVATIONS LLP is India's leading EdTech company transforming education. We provide hands-on STEM, Robotics, IoT, 3D Printing, and AI training for students and partner schools.",
   keywords: [
-    "Robotonic Innovations SDDP LLP", 
-    "Robotonic Innovations", 
+    "SDDP ROBOTONIC INNOVATIONS LLP", 
+    "SDDP ROBOTONIC INNOVATIONS", 
     "STEM education India", 
     "Robotics for kids", 
     "IoT training for students", 
@@ -26,16 +26,16 @@ export const metadata: Metadata = {
     "STEM Models"
   ],
   openGraph: {
-    title: "Robotonic Innovations SDDP LLP | Premium STEM Education",
-    description: "Transforming the future of Indian education with hands-on practical learning in STEM, Robotics, AI, and IoT training.",
-    url: "https://robotonicinnovations.com",
-    siteName: "Robotonic Innovations",
+    title: "SDDP ROBOTONIC INNOVATIONS LLP | Premium STEM Education",
+    description: "Transform your school with state-of-the-art Robotics and STEM labs.",
+    url: "https://sddprobotonicinnovations.com/",
+    siteName: "SDDP ROBOTONIC INNOVATIONS LLP",
     images: [
       {
-        url: "/logo.png",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Robotonic Innovations Logo",
+        alt: "SDDP ROBOTONIC INNOVATIONS LLP Logo",
       }
     ],
     locale: "en_IN",

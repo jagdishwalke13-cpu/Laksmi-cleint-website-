@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-3 mb-2">
               <img src="/logo.png" alt="Robotonic Logo" className="h-12 w-auto object-contain bg-white p-1.5 rounded-[1rem] shadow-lg border-2 border-white/10" />
-              <h3 className="text-xl font-bold text-white tracking-tight">Robotonic Innovations</h3>
+              <h3 className="text-xl font-bold text-white tracking-tight">SDDP ROBOTONIC INNOVATIONS LLP</h3>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
               Innovating the Future with Robotics & Automation.
@@ -79,8 +79,8 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 mt-12 border-t border-slate-800 text-center">
-          <p className="text-slate-500 text-sm">
-            © 2026 Robotonic Innovations SDDP. All Rights Reserved.
+          <p className="text-sm font-medium">
+            © 2026 SDDP ROBOTONIC INNOVATIONS LLP. All Rights Reserved.
           </p>
         </div>
       </div>

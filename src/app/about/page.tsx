@@ -157,7 +157,7 @@ export default function AboutAndContactPage() {
               transition={{ duration: 1, delay: 0.8 }}
               className="text-xl sm:text-2xl text-gray-600 font-medium max-w-3xl leading-relaxed"
             >
-              Robotonic Innovations SDDP PVT LTD is an educational technology company based in Bangalore. The company operates under the SDDP Innovation Program and was established with the goal of bringing hands-on, practical, and experience-based learning to school students across India.
+              SDDP ROBOTONIC INNOVATIONS LLP is an educational technology company based in Bangalore. The company operates under the SDDP Innovation Program and was established with the goal of bringing hands-on, practical, and experience-based learning to school students across India.
             </motion.p>
           </motion.div>
         </div>

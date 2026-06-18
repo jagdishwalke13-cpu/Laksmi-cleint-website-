@@ -192,7 +192,7 @@ export default function Home() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-6">
             <StaggeredHeading text="We turn curiosity into real-world creations." className="text-4xl sm:text-5xl font-extrabold text-[#1E293B]" />
             <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-              Robotonic Innovations SDDP is an educational technology company introducing a cutting-edge approach. We emphasize hands-on learning, transitioning fundamental science into practical models.
+              SDDP ROBOTONIC INNOVATIONS LLP is an educational technology company introducing a cutting-edge approach. We emphasize hands-on learning, transitioning fundamental science into practical models.
             </motion.p>
           </motion.div>
         </div>
@@ -510,7 +510,7 @@ export default function Home() {
                 a: "Yes, absolutely! We believe in continuous learning. Students are provided with individual, fully-equipped DIY STEM kits. Once they build a project during the workshop or class, they get to take it home to experiment further and show their parents." 
               },
               { 
-                q: "How does Robotonic Innovations set up a STEM lab in a school?", 
+                q: "How does SDDP ROBOTONIC INNOVATIONS LLP set up a STEM lab in a school?", 
                 a: "We provide end-to-end consulting and execution. This includes procuring the latest 3D printers, soldering stations, robotics kits, and electronics. We also handle the interior setup, teacher training, curriculum integration, and provide Annual Maintenance Contracts (AMC)." 
               },
               {

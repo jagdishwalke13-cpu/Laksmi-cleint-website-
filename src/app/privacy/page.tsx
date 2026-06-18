@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-gray-600 font-medium"
           >
-            Effective Date: May 2026. Learn how Robotonic Innovations SDDP protects and manages your data.
+            Effective Date: May 2026. Learn how SDDP ROBOTONIC INNOVATIONS LLP protects and manages your data.
           </motion.p>
         </div>
       </section>
@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
           <div>
             <h2 className="text-2xl font-semibold text-[#1E293B] mb-4 border-l-4 border-[#FF7A00] pl-4">1. Information We Collect</h2>
             <p className="mb-4">
-              At Robotonic Innovations SDDP Pvt Ltd, we prioritize your privacy. We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about our STEM programs, when you participate in activities on the Services (such as requesting a demo or lab setup), or otherwise when you contact us.
+              At SDDP ROBOTONIC INNOVATIONS LLP, we prioritize your privacy. We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about our STEM programs, when you participate in activities on the Services (such as requesting a demo or lab setup), or otherwise when you contact us.
             </p>
             <p>
               The personal information that we collect depends on the context of your interactions with us and may include:
@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
               We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. We are committed to ensuring that student and school data remains highly confidential and is protected using industry-standard protocols.
             </p>
             <p>
-              <strong>Robotonic Innovations SDDP will never sell, rent, or lease your personal information to third parties.</strong> However, please remember that no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure.
+              <strong>SDDP ROBOTONIC INNOVATIONS LLP will never sell, rent, or lease your personal information to third parties.</strong> However, please remember that no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export default function PrivacyPolicyPage() {
             </p>
             
             <address className="not-italic space-y-3 text-[#1E293B] font-medium">
-              <p><strong>Company:</strong> Robotonic Innovations SDDP PVT LTD</p>
+              <p><strong>Company:</strong> SDDP ROBOTONIC INNOVATIONS LLP</p>
               <p>
                 <strong>Email:</strong>{" "}
                 <a href="mailto:Robotonicinnovationsddp@gmail.com" className="text-[#FF7A00] hover:underline transition-all break-all">

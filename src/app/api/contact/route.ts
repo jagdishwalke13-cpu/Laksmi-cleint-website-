@@ -58,7 +58,7 @@ export async function POST(request: Request) {
             </div>
           </div>
           <div style="background-color: #1E293B; padding: 15px; text-align: center;">
-            <p style="color: #888; font-size: 12px; margin: 0;">Automated message from Robotonic Innovations Website</p>
+            <p style="color: #888; font-size: 12px; margin: 0;">Automated message from SDDP ROBOTONIC INNOVATIONS LLP Website</p>
           </div>
         </div>
       `,
@@ -66,9 +66,9 @@ export async function POST(request: Request) {
 
     // 2. Auto-reply to the User
     const userMailOptions = {
-      from: `"Robotonic Innovations" <${process.env.EMAIL_USER}>`,
+      from: `"SDDP ROBOTONIC INNOVATIONS LLP" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Thank you for contacting Robotonic Innovations!',
+      subject: 'Thank you for contacting SDDP ROBOTONIC INNOVATIONS LLP!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
           <div style="background-color: #1E293B; padding: 30px; text-align: center;">
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 30px; background-color: #ffffff;">
             <p style="font-size: 16px; color: #333; line-height: 1.6;">Hello ${name},</p>
-            <p style="font-size: 16px; color: #333; line-height: 1.6;">Thank you for your interest in Robotonic Innovations. This email is to confirm that we have successfully received your inquiry.</p>
+            <p style="font-size: 16px; color: #333; line-height: 1.6;">Thank you for your interest in SDDP ROBOTONIC INNOVATIONS LLP. This email is to confirm that we have successfully received your inquiry.</p>
             <p style="font-size: 16px; color: #333; line-height: 1.6;">Our team is reviewing your details and will get back to you shortly to schedule your free demo and discuss how we can bring next-generation STEM learning to your students.</p>
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
             </div>
           </div>
           <div style="background-color: #f9f9f9; padding: 20px; text-align: center;">
-            <p style="color: #888; font-size: 12px; margin: 0;">Robotonic Innovations SDDP Pvt Ltd</p>
+            <p style="color: #888; font-size: 12px; margin: 0;">SDDP ROBOTONIC INNOVATIONS LLP</p>
             <p style="color: #888; font-size: 12px; margin-top: 5px; margin-bottom: 0;">Innovating the Future with Robotics & Automation.</p>
           </div>
         </div>
