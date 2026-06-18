@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# dynamic data
+feedbacks.json
+api/feedbacks.json
+public/api/feedbacks.json

@@ -38,32 +38,8 @@ export default function Home() {
   ]);
 
   useEffect(() => {
-    // Migrate old local storage feedbacks to the new server
-    const saved = localStorage.getItem("robotonic_feedback");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          parsed.forEach(async (fb) => {
-            await fetch('/api/feedback.php', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: fb.author || fb.name || "Anonymous",
-                email: fb.email || "migrated@example.com",
-                feedback: fb.text || fb.feedback,
-                role: fb.role || "Enthusiast"
-              })
-            });
-          });
-          // Clear after migrating to prevent duplicates
-          localStorage.removeItem("robotonic_feedback");
-        }
-      } catch (e) {}
-    }
-
-    // Fetch feedbacks from server
-    fetch('/api/feedback.php')
+    // Fetch feedbacks from server with cache busting
+    fetch(`/api/feedback.php?t=${new Date().getTime()}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
@@ -417,15 +393,15 @@ export default function Home() {
                     <Quote className="absolute top-6 right-6 lg:top-12 lg:right-12 h-24 w-24 text-[#FFF8F1] z-0" />
                     <div className="relative z-10">
                       <p className="text-xl sm:text-2xl lg:text-3xl text-gray-700 leading-relaxed font-medium italic mb-10">
-                        "{testimonials[currentTestimonial].text}"
+                        "{testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.text || testimonials[0].text}"
                       </p>
                       <div className="flex items-center gap-6">
                         <div className="w-16 h-16 rounded-full bg-[#FF7A00] flex shrink-0 items-center justify-center text-white font-bold text-2xl shadow-lg shadow-orange-500/30">
-                          {testimonials[currentTestimonial].author.charAt(0).toUpperCase() || (testimonials[currentTestimonial].author.includes('.') ? testimonials[currentTestimonial].author.split('.')[1]?.trim().charAt(0) : 'U')}
+                          {(testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.author || testimonials[0].author).charAt(0).toUpperCase() || ((testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.author || testimonials[0].author).includes('.') ? (testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.author || testimonials[0].author).split('.')[1]?.trim().charAt(0) : 'U')}
                         </div>
                         <div>
-                          <h4 className="font-bold text-xl text-[#1E293B]">{testimonials[currentTestimonial].author}</h4>
-                          <p className="text-[#FF7A00] font-semibold">{testimonials[currentTestimonial].role}</p>
+                          <h4 className="font-bold text-xl text-[#1E293B]">{testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.author || testimonials[0].author}</h4>
+                          <p className="text-[#FF7A00] font-semibold">{testimonials.slice(0, 6)[currentTestimonial % Math.min(testimonials.length, 6)]?.role || testimonials[0].role}</p>
                         </div>
                       </div>
                     </div>
@@ -433,20 +409,28 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
 
-              {testimonials.length > 1 && (
+              {Math.min(testimonials.length, 6) > 1 && (
                 <div className="flex justify-center gap-4 mt-10">
                   <button 
-                    onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)} 
+                    onClick={() => setCurrentTestimonial((prev) => (prev - 1 + Math.min(testimonials.length, 6)) % Math.min(testimonials.length, 6))} 
                     className="w-14 h-14 rounded-full bg-white border border-gray-100 shadow-xl flex items-center justify-center text-[#1E293B] hover:text-[#FF7A00] hover:scale-110 transition-all"
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
                   <button 
-                    onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)} 
+                    onClick={() => setCurrentTestimonial((prev) => (prev + 1) % Math.min(testimonials.length, 6))} 
                     className="w-14 h-14 rounded-full bg-[#FF7A00] shadow-xl shadow-orange-500/30 flex items-center justify-center text-white hover:scale-110 transition-all"
                   >
                     <ChevronRight className="w-6 h-6" />
                   </button>
+                </div>
+              )}
+              
+              {testimonials.length > 6 && (
+                <div className="flex justify-center mt-8">
+                  <Link href="/feedbacks" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E293B] text-white font-semibold hover:bg-[#FF7A00] transition-colors">
+                    View All Feedbacks <ArrowRight className="w-5 h-5" />
+                  </Link>
                 </div>
               )}
             </div>
