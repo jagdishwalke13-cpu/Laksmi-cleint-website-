@@ -37,26 +37,43 @@ export default function Home() {
   ]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("robotonic_feedback");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setTestimonials((prev) => [...prev, ...parsed]);
-      } catch (e) {}
-    }
+    fetch('/api/feedback.php')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((item: any) => ({
+            text: item.feedback,
+            author: item.name,
+            role: item.role,
+          }));
+          setTestimonials(formatted);
+        }
+      })
+      .catch(e => console.error("Error loading feedbacks:", e));
   }, []);
 
-  const handleFeedbackSubmit = (feedback: { name: string; email: string; text: string; role: string }) => {
+  const handleFeedbackSubmit = async (feedback: { name: string; email: string; text: string; role: string }) => {
     const newTestimonial = {
       text: feedback.text,
       author: feedback.name,
       role: feedback.role,
     };
-    setTestimonials((prev) => [...prev, newTestimonial]);
+    setTestimonials((prev) => [newTestimonial, ...prev]);
     
-    const saved = localStorage.getItem("robotonic_feedback");
-    const parsed = saved ? JSON.parse(saved) : [];
-    localStorage.setItem("robotonic_feedback", JSON.stringify([...parsed, newTestimonial]));
+    try {
+      await fetch('/api/feedback.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: feedback.name,
+          email: feedback.email,
+          feedback: feedback.text,
+          role: feedback.role
+        })
+      });
+    } catch (e) {
+      console.error("Failed to save feedback", e);
+    }
   };
 
   const toggleFaq = (index: number) => {
