@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -228,13 +229,15 @@ export default function GalleryPage() {
             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight leading-tight">
               Inspired by our young innovators?<br className="hidden md:block"/> Bring the Robotonic SDDP to your school today.
             </h2>
-            <motion.button 
-              animate={{ boxShadow: ["0px 0px 0px rgba(255,122,0,0)", "0px 0px 30px rgba(255,122,0,0.6)", "0px 0px 0px rgba(255,122,0,0)"] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="bg-[#FF7A00] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#FFB547] transition-colors"
-            >
-              Request a Free Demo
-            </motion.button>
+            <Link href="/contact">
+              <motion.button 
+                animate={{ boxShadow: ["0px 0px 0px rgba(255,122,0,0)", "0px 0px 30px rgba(255,122,0,0.6)", "0px 0px 0px rgba(255,122,0,0)"] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="bg-[#FF7A00] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#FFB547] transition-colors"
+              >
+                Request a Free Demo
+              </motion.button>
+            </Link>
           </div>
         </div>
       </section>
