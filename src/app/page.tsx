@@ -5,7 +5,7 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, Play, Cpu, Brain, Printer, Plane, Zap, Building, 
   CheckCircle2, Users, BookOpen, Layers, Plus, Minus, Mail, Phone, MapPin,
-  MessageSquare, Quote, PenLine
+  MessageSquare, Quote, PenLine, ChevronLeft, ChevronRight
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { 
@@ -31,6 +31,7 @@ const staggerContainer: any = {
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [testimonials, setTestimonials] = useState([
     { text: "My child became more curious and confident after the STEM program. Building and taking home the model made learning real and exciting.", author: "Mrs. Ananya Rao", role: "Parent" },
     { text: "A well-structured STEM solution... thoughtfully aligned with the school syllabus, ensuring hands-on activities reinforce classroom concepts.", author: "Dr. Rekha Reddy", role: "Principal" }
@@ -402,27 +403,54 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
-              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.2 }}>
-                <AnimeAnimatedCard className="bg-white p-8 lg:p-10 rounded-3xl shadow-xl shadow-orange-500/5 relative border border-gray-100 h-full flex flex-col justify-between">
-                  <div>
-                    <Quote className="absolute top-6 right-6 h-16 w-16 text-[#FFF8F1] z-0" />
-                    <p className="text-lg text-gray-700 leading-relaxed relative z-10 font-medium italic mb-8">"{t.text}"</p>
-                  </div>
-                  <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#FF7A00] flex shrink-0 items-center justify-center text-white font-bold text-xl">
-                      {t.author.charAt(0).toUpperCase() || (t.author.includes('.') ? t.author.split('.')[1]?.trim().charAt(0) : 'U')}
+          {testimonials.length > 0 && (
+            <div className="relative max-w-4xl mx-auto">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  <AnimeAnimatedCard className="bg-white p-8 sm:p-12 lg:p-16 rounded-[3rem] shadow-2xl shadow-orange-500/10 relative border border-gray-100">
+                    <Quote className="absolute top-6 right-6 lg:top-12 lg:right-12 h-24 w-24 text-[#FFF8F1] z-0" />
+                    <div className="relative z-10">
+                      <p className="text-xl sm:text-2xl lg:text-3xl text-gray-700 leading-relaxed font-medium italic mb-10">
+                        "{testimonials[currentTestimonial].text}"
+                      </p>
+                      <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 rounded-full bg-[#FF7A00] flex shrink-0 items-center justify-center text-white font-bold text-2xl shadow-lg shadow-orange-500/30">
+                          {testimonials[currentTestimonial].author.charAt(0).toUpperCase() || (testimonials[currentTestimonial].author.includes('.') ? testimonials[currentTestimonial].author.split('.')[1]?.trim().charAt(0) : 'U')}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-xl text-[#1E293B]">{testimonials[currentTestimonial].author}</h4>
+                          <p className="text-[#FF7A00] font-semibold">{testimonials[currentTestimonial].role}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-[#1E293B]">{t.author}</h4>
-                      <p className="text-[#FF7A00] font-semibold text-sm">{t.role}</p>
-                    </div>
-                  </div>
-                </AnimeAnimatedCard>
-              </motion.div>
-            ))}
-          </div>
+                  </AnimeAnimatedCard>
+                </motion.div>
+              </AnimatePresence>
+
+              {testimonials.length > 1 && (
+                <div className="flex justify-center gap-4 mt-10">
+                  <button 
+                    onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)} 
+                    className="w-14 h-14 rounded-full bg-white border border-gray-100 shadow-xl flex items-center justify-center text-[#1E293B] hover:text-[#FF7A00] hover:scale-110 transition-all"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button 
+                    onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)} 
+                    className="w-14 h-14 rounded-full bg-[#FF7A00] shadow-xl shadow-orange-500/30 flex items-center justify-center text-white hover:scale-110 transition-all"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
